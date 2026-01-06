@@ -10,5 +10,6 @@ gem "rake", "~> 13.0"
 
 gem "rspec", "~> 3.0"
 gem "vcr"
+gem "webmock"
 
 gem "standard", "~> 1.3"

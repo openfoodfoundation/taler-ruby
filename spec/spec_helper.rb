@@ -9,6 +9,15 @@ VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
   config.configure_rspec_metadata!
+
+  # Change recording mode during development:
+  #
+  #   VCR_RECORD=new_episodes rspec spec/example_spec.rb
+  #   VCR_RECORD=all          rspec spec/example_spec.rb
+  #
+  if ENV.fetch("VCR_RECORD", nil)
+    config.default_cassette_options = {record: ENV.fetch("VCR_RECORD").to_sym}
+  end
 end
 
 RSpec.configure do |config|
