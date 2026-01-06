@@ -1,8 +1,22 @@
 # frozen_string_literal: true
 
+require "json"
+require "net/http"
 require_relative "taler/version"
 
 module Taler
   class Error < StandardError; end
-  # Your code goes here...
+
+  def self.request_token(backend_url, password)
+    url = "#{backend_url}/private/token"
+    headers = {
+      "Authorization" => "Bearer secret-token:#{password}",
+      "Accept" => "application/json",
+      "Content-Type" => "application/json",
+      "User-Agent" => "Taler Ruby"
+    }
+    data = JSON.dump(scope: "write")
+    response = Net::HTTP.post(URI(url), data, headers)
+    JSON.parse(response.body).fetch("token")
+  end
 end
