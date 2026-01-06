@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - Bearer secret-token:sandbox
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 06 Jan 2026 05:47:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:3F470DMPGTWZCETSZJ6ANVQ2G36B0MJVS9HE27NZJSX9GQAWTHZ0",
+          "token": "secret-token:3F470DMPGTWZCETSZJ6ANVQ2G36B0MJVS9HE27NZJSX9GQAWTHZ0",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1767764826
+          }
+        }
+  recorded_at: Tue, 06 Jan 2026 05:47:05 GMT
+recorded_with: VCR 6.4.0
