@@ -9,26 +9,15 @@ module Taler
 
   def self.request_token(backend_url, password)
     url = "#{backend_url}/private/token"
-    headers = {
-      "Authorization" => "Bearer secret-token:#{password}",
-      "Accept" => "application/json",
-      "Content-Type" => "application/json",
-      "User-Agent" => "Taler Ruby"
-    }
-    data = JSON.dump(scope: "write")
-    response = Net::HTTP.post(URI(url), data, headers)
-    JSON.parse(response.body).fetch("token")
+    token = "secret-token:#{password}"
+    payload = {scope: "write"}
+    result = post(url, token, payload)
+    result.fetch("token")
   end
 
   def self.create_order(backend_url, password, amount, summary, fulfillment_url)
     url = "#{backend_url}/private/orders"
     token = request_token(backend_url, password)
-    headers = {
-      "Authorization" => "Bearer #{token}",
-      "Accept" => "application/json",
-      "Content-Type" => "application/json",
-      "User-Agent" => "Taler Ruby"
-    }
     payload = {
       order: {
         amount: amount,
@@ -36,6 +25,16 @@ module Taler
         fulfillment_url: fulfillment_url
       },
       create_token: false
+    }
+    post(url, token, payload)
+  end
+
+  def self.post(url, token, payload)
+    headers = {
+      "Authorization" => "Bearer #{token}",
+      "Accept" => "application/json",
+      "Content-Type" => "application/json",
+      "User-Agent" => "Taler Ruby"
     }
     data = JSON.dump(payload)
     response = Net::HTTP.post(URI(url), data, headers)
