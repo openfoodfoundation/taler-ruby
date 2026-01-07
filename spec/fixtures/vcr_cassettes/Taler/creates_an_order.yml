@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - Bearer secret-token:sandbox
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Wed, 07 Jan 2026 01:12:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0",
+          "token": "secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1767834776
+          }
+        }
+  recorded_at: Wed, 07 Jan 2026 01:12:56 GMT
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders
+    body:
+      encoding: UTF-8
+      string: '{"order":{"amount":"KUDOS:5.95","summary":"Order total","fulfillment_url":"http://example.com"},"create_token":false}'
+    headers:
+      Authorization:
+      - Bearer secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Wed, 07 Jan 2026 01:12:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '42'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "order_id": "2026.007-008311G910CC6"
+        }
+  recorded_at: Wed, 07 Jan 2026 01:12:57 GMT
+recorded_with: VCR 6.4.0
