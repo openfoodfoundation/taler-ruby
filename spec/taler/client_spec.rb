@@ -15,4 +15,13 @@ RSpec.describe Taler::Client do
     order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
     expect(order).to include("order_id" => /^20..\./)
   end
+
+  it "fetches an order", :vcr do
+    order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
+    order_id = order.fetch("order_id")
+
+    order = client.fetch_order(order_id)
+    expect(order).to include("taler_pay_uri" => /^taler:\/\/pay\/backend\.de/)
+    expect(order).to include("order_status_url" => /^https:\/\/backend\.demo/)
+  end
 end

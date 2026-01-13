@@ -1,0 +1,323 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.013-03T16NXYZ64JP
+    body:
+      encoding: UTF-8
+      string: 'null'
+    headers:
+      Authorization:
+      - Bearer secret-token:F142Z0A8EZ8THS8ZPF9BW64NZGQY869KSGKXRB2KA8SNMN5TJSPG
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:48:53 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '245'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Allow:
+      - GET, HEAD, DELETE
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "code": 20,
+          "hint": "The HTTP method used is invalid for this endpoint. This is likely a bug in the client implementation. Check if you are using the latest available version and/or file a report with the developers.",
+          "detail": "POST"
+        }
+  recorded_at: Tue, 13 Jan 2026 04:48:53 GMT
+- request:
+    method: get
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.013-02YME5WAVTHGP
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer secret-token:Z8G17PE64H49TREV3MA2QJRPAVW7J8PBFGJMQKPJQ2DRZN63TFCG
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:50:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '341'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "taler_pay_uri": "taler://pay/backend.demo.taler.net/instances/sandbox/2026.013-02YME5WAVTHGP/",
+          "order_status_url": "https://backend.demo.taler.net/instances/sandbox/orders/2026.013-02YME5WAVTHGP",
+          "order_status": "unpaid",
+          "total_amount": "KUDOS:5.95",
+          "summary": "Order total",
+          "creation_time": {
+            "t_s": 1768279817
+          }
+        }
+  recorded_at: Tue, 13 Jan 2026 04:50:20 GMT
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - Bearer secret-token:sandbox
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:51:08 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:R9XS1BFZGFNT4S85SFVM4ZQDXAHS6TNXYNYD95JMPV89WGPF2F60",
+          "token": "secret-token:R9XS1BFZGFNT4S85SFVM4ZQDXAHS6TNXYNYD95JMPV89WGPF2F60",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1768366268
+          }
+        }
+  recorded_at: Tue, 13 Jan 2026 04:51:08 GMT
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders
+    body:
+      encoding: UTF-8
+      string: '{"order":{"amount":"KUDOS:5.95","summary":"Order total","fulfillment_url":"http://example.com"},"create_token":false}'
+    headers:
+      Authorization:
+      - Bearer secret-token:R9XS1BFZGFNT4S85SFVM4ZQDXAHS6TNXYNYD95JMPV89WGPF2F60
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:51:09 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '42'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "order_id": "2026.013-C37PY1NMWWVG6"
+        }
+  recorded_at: Tue, 13 Jan 2026 04:51:09 GMT
+- request:
+    method: post
+    uri: https://backend.demo.taler.net/instances/sandbox/private/token
+    body:
+      encoding: UTF-8
+      string: '{"scope":"write"}'
+    headers:
+      Authorization:
+      - Bearer secret-token:sandbox
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:51:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '258'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "secret-token:1NBBTAASB99FVGTDNS0WE1ZJRKQ26N92FBF9KBPD0WDZGSGX8Q5G",
+          "token": "secret-token:1NBBTAASB99FVGTDNS0WE1ZJRKQ26N92FBF9KBPD0WDZGSGX8Q5G",
+          "scope": "write",
+          "refreshable": false,
+          "expiration": {
+            "t_s": 1768366270
+          }
+        }
+  recorded_at: Tue, 13 Jan 2026 04:51:10 GMT
+- request:
+    method: get
+    uri: https://backend.demo.taler.net/instances/sandbox/private/orders/2026.013-C37PY1NMWWVG6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer secret-token:1NBBTAASB99FVGTDNS0WE1ZJRKQ26N92FBF9KBPD0WDZGSGX8Q5G
+      Accept:
+      - application/json
+      User-Agent:
+      - Taler Ruby
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.3
+      Date:
+      - Tue, 13 Jan 2026 04:51:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '341'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-store
+      Via:
+      - 1.1 Caddy
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "taler_pay_uri": "taler://pay/backend.demo.taler.net/instances/sandbox/2026.013-C37PY1NMWWVG6/",
+          "order_status_url": "https://backend.demo.taler.net/instances/sandbox/orders/2026.013-C37PY1NMWWVG6",
+          "order_status": "unpaid",
+          "total_amount": "KUDOS:5.95",
+          "summary": "Order total",
+          "creation_time": {
+            "t_s": 1768279869
+          }
+        }
+  recorded_at: Tue, 13 Jan 2026 04:51:12 GMT
+recorded_with: VCR 6.4.0

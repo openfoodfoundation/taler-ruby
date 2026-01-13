@@ -32,7 +32,23 @@ module Taler
       post(url, token, payload)
     end
 
+    def fetch_order(order_id)
+      url = "#{@backend_url}/private/orders/#{order_id}"
+      token = request_token
+      get(url, token)
+    end
+
     private
+
+    def get(url, token)
+      headers = {
+        'Authorization' => "Bearer #{token}",
+        'Accept' => 'application/json',
+        'User-Agent' => 'Taler Ruby'
+      }
+      response = Net::HTTP.get(URI(url), headers)
+      JSON.parse(response)
+    end
 
     def post(url, token, payload)
       headers = {
