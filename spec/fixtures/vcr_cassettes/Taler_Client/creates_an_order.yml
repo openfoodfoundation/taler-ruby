@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Wed, 07 Jan 2026 01:12:56 GMT
+      - Tue, 13 Jan 2026 04:09:10 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -46,15 +46,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "access_token": "secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0",
-          "token": "secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0",
+          "access_token": "secret-token:JBJ05DSW79WJPFSMQMSD5519JHV0Y69NXC89VA6SMD58W6GVJGCG",
+          "token": "secret-token:JBJ05DSW79WJPFSMQMSD5519JHV0Y69NXC89VA6SMD58W6GVJGCG",
           "scope": "write",
           "refreshable": false,
           "expiration": {
-            "t_s": 1767834776
+            "t_s": 1768363750
           }
         }
-  recorded_at: Wed, 07 Jan 2026 01:12:56 GMT
+  recorded_at: Tue, 13 Jan 2026 04:09:10 GMT
 - request:
     method: post
     uri: https://backend.demo.taler.net/instances/sandbox/private/orders
@@ -63,7 +63,7 @@ http_interactions:
       string: '{"order":{"amount":"KUDOS:5.95","summary":"Order total","fulfillment_url":"http://example.com"},"create_token":false}'
     headers:
       Authorization:
-      - Bearer secret-token:2QF7YYWNB2J1ASKGDGKBW8Y8FRVMX06JMGGB6WGYWGQ16V2BT1Z0
+      - Bearer secret-token:JBJ05DSW79WJPFSMQMSD5519JHV0Y69NXC89VA6SMD58W6GVJGCG
       Accept:
       - application/json
       Content-Type:
@@ -80,7 +80,7 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Wed, 07 Jan 2026 01:12:57 GMT
+      - Tue, 13 Jan 2026 04:09:11 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -101,7 +101,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "order_id": "2026.007-008311G910CC6"
+          "order_id": "2026.013-0343KZ3QWGEFW"
         }
-  recorded_at: Wed, 07 Jan 2026 01:12:57 GMT
+  recorded_at: Tue, 13 Jan 2026 04:09:12 GMT
 recorded_with: VCR 6.4.0

@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Tue, 06 Jan 2026 05:47:06 GMT
+      - Tue, 13 Jan 2026 04:09:09 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -46,13 +46,13 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "access_token": "secret-token:3F470DMPGTWZCETSZJ6ANVQ2G36B0MJVS9HE27NZJSX9GQAWTHZ0",
-          "token": "secret-token:3F470DMPGTWZCETSZJ6ANVQ2G36B0MJVS9HE27NZJSX9GQAWTHZ0",
+          "access_token": "secret-token:ETYEBEW21JJ0CBTPWBNR6B2TRSSVA05TQGXH5ZAAQ9D9JMRHGG50",
+          "token": "secret-token:ETYEBEW21JJ0CBTPWBNR6B2TRSSVA05TQGXH5ZAAQ9D9JMRHGG50",
           "scope": "write",
           "refreshable": false,
           "expiration": {
-            "t_s": 1767764826
+            "t_s": 1768363749
           }
         }
-  recorded_at: Tue, 06 Jan 2026 05:47:05 GMT
+  recorded_at: Tue, 13 Jan 2026 04:09:09 GMT
 recorded_with: VCR 6.4.0
