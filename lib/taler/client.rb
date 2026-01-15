@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'net/http'
+require "json"
+require "net/http"
 
 module Taler
   class Client
@@ -12,15 +12,13 @@ module Taler
 
     def request_token
       url = "#{@backend_url}/private/token"
-      token = "secret-token:#{@password}"
-      payload = { scope: 'write' }
-      result = post(url, token, payload)
-      result.fetch('token')
+      payload = {scope: "write"}
+      result = request(url, payload:)
+      result.fetch("token")
     end
 
     def create_order(amount, summary, fulfillment_url)
       url = "#{@backend_url}/private/orders"
-      token = request_token
       payload = {
         order: {
           amount: amount,
@@ -29,37 +27,48 @@ module Taler
         },
         create_token: false
       }
-      post(url, token, payload)
+      request(url, payload:)
     end
 
     def fetch_order(order_id)
       url = "#{@backend_url}/private/orders/#{order_id}"
-      token = request_token
-      get(url, token)
+      request(url)
     end
 
     private
 
-    def get(url, token)
+    def auth_token
+      "secret-token:#{@password}"
+    end
+
+    def get(url, token = auth_token)
       headers = {
-        'Authorization' => "Bearer #{token}",
-        'Accept' => 'application/json',
-        'User-Agent' => 'Taler Ruby'
+        "Authorization" => "Bearer #{token}",
+        "Accept" => "application/json",
+        "User-Agent" => "Taler Ruby"
       }
       response = Net::HTTP.get(URI(url), headers)
       JSON.parse(response)
     end
 
-    def post(url, token, payload)
+    def request(url, token: auth_token, payload: nil)
+      uri = URI(url)
       headers = {
-        'Authorization' => "Bearer #{token}",
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'User-Agent' => 'Taler Ruby'
+        "Authorization" => "Bearer #{token}",
+        "Accept" => "application/json",
+        "User-Agent" => "Taler Ruby"
       }
-      data = JSON.dump(payload)
-      response = Net::HTTP.post(URI(url), data, headers)
-      JSON.parse(response.body)
+
+      if payload.nil?
+        body = Net::HTTP.get(uri, headers)
+      else
+        headers["Content-Type"] = "application/json"
+        data = JSON.dump(payload)
+        response = Net::HTTP.post(uri, data, headers)
+        body = response.body
+      end
+
+      JSON.parse(body)
     end
   end
 end
