@@ -20,7 +20,7 @@ client = Taler::Client.new(backend_url, backend_password)
 order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
 order = client.fetch_order(order.fetch("order_id"))
 
-puts "Pleas pay at: #{order['order_status_url']}"
+puts "Please pay at: #{order['order_status_url']}"
 ```
 
 ## Development
