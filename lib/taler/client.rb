@@ -4,6 +4,9 @@ require "json"
 require "net/http"
 
 module Taler
+  # Access the GNU Taler merchant backend API.
+  #
+  # See: https://docs.taler.net/core/api-merchant.html
   class Client
     def initialize(backend_url, password)
       @backend_url = backend_url
@@ -33,6 +36,12 @@ module Taler
     def fetch_order(order_id)
       url = "#{@backend_url}/private/orders/#{order_id}"
       request(url)
+    end
+
+    def refund_order(order_id, refund:, reason:)
+      url = "#{@backend_url}/private/orders/#{order_id}/refund"
+      payload = { refund:, reason: }
+      request(url, payload:)
     end
 
     private
