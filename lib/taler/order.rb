@@ -4,7 +4,6 @@ module Taler
   # Order representation with convenient access to the merchant API.
   class Order
     def initialize(backend_url:, password:, id: nil)
-      @backend_url = backend_url
       @client = Client.new(backend_url, password)
       @id = id
     end
@@ -15,7 +14,7 @@ module Taler
     end
 
     def status_url
-      "#{@backend_url}/orders/#{@id}"
+      @client.order_status_url(@id)
     end
 
     def fetch(key)

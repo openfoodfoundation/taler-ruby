@@ -33,6 +33,10 @@ module Taler
       request(url, payload:)
     end
 
+    def order_status_url(order_id)
+      "#{@backend_url}/orders/#{order_id}"
+    end
+
     def fetch_order(order_id)
       url = "#{@backend_url}/private/orders/#{order_id}"
       request(url)
