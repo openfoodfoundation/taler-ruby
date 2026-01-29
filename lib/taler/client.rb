@@ -20,16 +20,15 @@ module Taler
       result.fetch("token")
     end
 
-    def create_order(amount, summary, fulfillment_url)
+    def create_order(amount:, summary:, fulfillment_url: nil, fulfillment_message: nil)
       url = "#{@backend_url}/private/orders"
-      payload = {
-        order: {
-          amount: amount,
-          summary: summary,
-          fulfillment_url: fulfillment_url
-        },
-        create_token: false
+      order = {
+        amount: amount,
+        summary: summary
       }
+      order[:fulfillment_url] = fulfillment_url unless fulfillment_url.nil?
+      order[:fulfillment_message] = fulfillment_message unless fulfillment_message.nil?
+      payload = {order:, create_token: false}
       request(url, payload:)
     end
 

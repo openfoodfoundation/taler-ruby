@@ -8,8 +8,10 @@ module Taler
       @id = id
     end
 
-    def create(amount:, summary:, fulfillment_url:, fulfillment_message: nil)
-      response = @client.create_order(amount, summary, fulfillment_url)
+    def create(amount:, summary:, fulfillment_url: nil, fulfillment_message: nil)
+      response = @client.create_order(
+        amount:, summary:, fulfillment_url:, fulfillment_message:
+      )
       @id = response.fetch("order_id")
     end
 

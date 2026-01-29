@@ -14,12 +14,12 @@ RSpec.describe Taler::Client do
   end
 
   it "creates an order", :vcr do
-    order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
+    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_url: "http://example.com")
     expect(order).to include("order_id" => /^20..\./)
   end
 
   it "fetches an order", :vcr do
-    order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
+    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_url: "http://example.com")
     order_id = order.fetch("order_id")
 
     order = client.fetch_order(order_id)
@@ -28,7 +28,7 @@ RSpec.describe Taler::Client do
   end
 
   it "refunds an order", :vcr do
-    order = client.create_order("KUDOS:2.00", "Tentative order", "http://example.com")
+    order = client.create_order(amount: "KUDOS:2.00", summary: "Tentative", fulfillment_url: "http://example.com")
     order_id = order.fetch("order_id")
 
     order = client.fetch_order(order_id)
