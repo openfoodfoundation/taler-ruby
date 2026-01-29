@@ -7,6 +7,7 @@ RSpec.describe Taler::Client do
 
   let(:backend_url) { "https://backend.demo.taler.net/instances/sandbox" }
   let(:backend_password) { "sandbox" }
+  let(:fulfillment_message) { "Thank you for testing." }
 
   it "retrieves a token", :vcr do
     token = client.request_token
@@ -14,12 +15,12 @@ RSpec.describe Taler::Client do
   end
 
   it "creates an order", :vcr do
-    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_url: "http://example.com")
+    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_message:)
     expect(order).to include("order_id" => /^20..\./)
   end
 
   it "fetches an order", :vcr do
-    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_url: "http://example.com")
+    order = client.create_order(amount: "KUDOS:5.95", summary: "Order total", fulfillment_message:)
     order_id = order.fetch("order_id")
 
     order = client.fetch_order(order_id)
@@ -28,7 +29,7 @@ RSpec.describe Taler::Client do
   end
 
   it "refunds an order", :vcr do
-    order = client.create_order(amount: "KUDOS:2.00", summary: "Tentative", fulfillment_url: "http://example.com")
+    order = client.create_order(amount: "KUDOS:2.00", summary: "Tentative", fulfillment_message:)
     order_id = order.fetch("order_id")
 
     order = client.fetch_order(order_id)
