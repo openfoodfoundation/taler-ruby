@@ -40,7 +40,7 @@ module Taler
 
     def refund_order(order_id, refund:, reason:)
       url = "#{@backend_url}/private/orders/#{order_id}/refund"
-      payload = { refund:, reason: }
+      payload = {refund:, reason:}
       request(url, payload:)
     end
 
