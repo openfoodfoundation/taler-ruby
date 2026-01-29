@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "debug"
-
 RSpec.describe Taler::Client do
   subject(:client) { Taler::Client.new(backend_url, backend_password) }
 

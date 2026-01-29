@@ -9,8 +9,9 @@ module PromptHelper
     return unless VCR.current_cassette.recording?
 
     puts message
-    puts "Then continue by typing the letter c and enter."
-    debugger
+    puts "Then press enter."
+
+    $stdin.gets.chomp
   end
 end
 

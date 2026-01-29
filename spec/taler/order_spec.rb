@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "debug"
-
 RSpec.describe Taler::Order do
   subject(:order) { Taler::Order.new(backend_url:, password:) }
 
