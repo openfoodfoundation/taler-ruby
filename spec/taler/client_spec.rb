@@ -34,20 +34,12 @@ RSpec.describe Taler::Client do
 
     order = client.fetch_order(order_id)
 
-    if VCR.current_cassette.recording?
-      puts "Pay at: #{order.fetch("order_status_url")}"
-      puts "Then continue by typing the letter c and enter."
-      debugger
-    end
+    prompt "Pay at: #{order.fetch("order_status_url")}"
 
     result = client.refund_order(order_id, refund: "KUDOS:2.00", reason: "testing")
     expect(result).to include("taler_refund_uri" => /^taler:\/\/refund\/backend/)
 
-    if VCR.current_cassette.recording?
-      puts "Refund at: #{order.fetch("order_status_url")}"
-      puts "Then continue by typing the letter c and enter."
-      debugger
-    end
+    prompt "Refund at: #{order.fetch("order_status_url")}"
 
     order = client.fetch_order(order_id)
     expect(order).to include("order_status" => "paid")

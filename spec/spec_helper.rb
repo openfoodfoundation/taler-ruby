@@ -4,6 +4,16 @@ require "taler"
 require "webmock/rspec"
 require "vcr"
 
+module PromptHelper
+  def prompt(message)
+    return unless VCR.current_cassette.recording?
+
+    puts message
+    puts "Then continue by typing the letter c and enter."
+    debugger
+  end
+end
+
 WebMock.enable!
 VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
@@ -30,4 +40,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include PromptHelper
 end

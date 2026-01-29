@@ -15,21 +15,13 @@ RSpec.describe Taler::Order do
       fulfillment_url: "http://example.com"
     )
 
-    if VCR.current_cassette.recording?
-      puts "Pay at: #{order.status_url}"
-      puts "Then continue by typing the letter c and enter."
-      debugger
-    end
+    prompt "Pay at: #{order.status_url}"
 
     expect(order.fetch("order_status")).to eq "paid"
 
     order.refund(refund: "KUDOS:4", reason: "test")
 
-    if VCR.current_cassette.recording?
-      puts "Accept refund at: #{order.status_url}"
-      puts "Then continue by typing the letter c and enter."
-      debugger
-    end
+    prompt "Accept refund at: #{order.status_url}"
 
     expect { order.reload }.to change { order.fetch("refunded") }.to true
   end
