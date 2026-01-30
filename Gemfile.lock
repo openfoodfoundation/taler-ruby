@@ -44,6 +44,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    redcarpet (3.6.1)
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -102,6 +103,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    yard (0.9.38)
 
 PLATFORMS
   ruby
@@ -110,11 +112,13 @@ PLATFORMS
 DEPENDENCIES
   irb
   rake
+  redcarpet
   rspec
   standard
   taler!
   vcr
   webmock
+  yard
 
 BUNDLED WITH
    2.6.9

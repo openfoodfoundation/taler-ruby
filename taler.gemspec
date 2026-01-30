@@ -46,6 +46,10 @@ Gem::Specification.new do |spec|
   # Code quality:
   spec.add_development_dependency "standard"
 
+  # Documentation:
+  spec.add_development_dependency "yard"
+  spec.add_development_dependency "redcarpet"
+
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 end
