@@ -15,13 +15,31 @@ bundle add taler
 ```rb
 backend_url = "https://backend.demo.taler.net/instances/sandbox"
 backend_password = "sandbox"
-client = Taler::Client.new(backend_url, backend_password)
 
-order = client.create_order("KUDOS:5.95", "Order total", "http://example.com")
-order = client.fetch_order(order.fetch("order_id"))
+order = Taler::Order.new(backend_url:, password:)
+order.create(
+  amount: "KUDOS:4",
+  summary: "Order total",
+  fulfillment_message: "Thank you!"
+)
 
-puts "Please pay at: #{order['order_status_url']}"
+puts "Pay at: #{order.status_url}"
+
+while order.fetch("order_status") == "unpaid"
+  sleep 1
+  order.reload
+end
+
+if order.fetch("order_status") == "paid"
+  puts "Great. All paid."
+else
+  puts "Sorry, the order is #{order.fetch("order_status")}. Try again."
+end
 ```
+
+Read more in the official documentation:
+
+- https://rubydoc.info/github/openfoodfoundation/taler-ruby.git
 
 ## Development
 
