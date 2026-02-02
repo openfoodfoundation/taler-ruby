@@ -8,6 +8,11 @@ module Taler
     # @param backend_url [String] e.g. `"https://backend.demo.taler.net/instances/sandbox"`
     # @param password [String] e.g. `"sandbox"`
     # @param id [String] The order id of an existing order.
+    # @example Connect to the official demo backend
+    #   Taler::Order.new(
+    #     backend_url: "https://backend.demo.taler.net/instances/sandbox",
+    #     password: "sandbox"
+    #   )
     def initialize(backend_url:, password:, id: nil)
       @client = Client.new(backend_url, password)
       @id = id
@@ -36,12 +41,14 @@ module Taler
     # Access order status fields.
     #
     # It queries the backend if it hasn't done that already.
-    # Call `#reload` beforehand to get the latest status from the backend.
+    # Call {#reload} beforehand to get the latest status from the backend.
     #
     # @param key [String] A field in the order status response of the backend,
     #   e.g. `order_status`.
-    # @return [String,TrueClass,FalseClass] The value of the field.
+    # @return [String,true,false] The value of the field.
     #   Any simple type supported by JSON.
+    # @example
+    #   fetch("order_status") #=> "unpaid"
     def fetch(key)
       reload unless @status
       @status.fetch(key)
@@ -49,7 +56,7 @@ module Taler
 
     # Query the latest order information from the backend.
     #
-    # If you called `#fetch` in the past and are expecting updates from
+    # If you called {#fetch} in the past and are expecting updates from
     # user interaction, you want to call this.
     def reload
       @status = @client.fetch_order(@id)
