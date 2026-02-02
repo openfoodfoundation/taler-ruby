@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.licenses = "LGPL-2.1-only"
 
   spec.summary = "GNU Taler payment API for Ruby"
-  # spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "https://rubydoc.info/github/openfoodfoundation/taler-ruby.git"
+  spec.description = "Create and refund orders through the Taler merchant backend API."
+  spec.homepage = "https://github.com/openfoodfoundation/taler-ruby"
   spec.required_ruby_version = ">= 3.4.0"
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"

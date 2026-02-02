@@ -39,7 +39,7 @@ end
 
 Read more in the official documentation:
 
-- https://rubydoc.info/github/openfoodfoundation/taler-ruby.git
+- https://rubydoc.info/gems/taler
 
 ## Development
 
