@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [0.2.0] - 2026-02-02
+
+- Add `Taler::Order` as an easier interface.
+- Add method to refund orders.
+- Add option for fulfillment message instead of fulfillment URL.
+- Add documentation with yard.
+
 ## [0.1.0] - 2026-01-19
 
 - Add `Taler::Client` to create access token and orders. Fetch orders.
