@@ -71,5 +71,22 @@ module Taler
     def refund(refund:, reason:)
       @client.refund_order(@id, refund:, reason:)
     end
+
+    def inspect
+      status = @status.to_h.slice(*%w[
+        order_status
+        deposit_total
+        wired
+        refunded
+        refund_pending
+        refund_amount
+      ])
+      "#<#{self.class.name} #{status_url} #{status.inspect}>"
+    end
+
+    def to_s
+      status = @status.to_h.slice("order_status", "refunded")
+      "#<#{self.class.name} #{status_url} #{status.inspect}>"
+    end
   end
 end
