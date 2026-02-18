@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   # Development:
   spec.add_development_dependency "irb"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "guard-rspec"
 
   # Testing:
   spec.add_development_dependency "rspec"
