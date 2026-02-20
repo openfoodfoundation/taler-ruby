@@ -53,16 +53,6 @@ module Taler
       "secret-token:#{@password}"
     end
 
-    def get(url, token = auth_token)
-      headers = {
-        "Authorization" => "Bearer #{token}",
-        "Accept" => "application/json",
-        "User-Agent" => "Taler Ruby"
-      }
-      response = Net::HTTP.get(URI(url), headers)
-      JSON.parse(response)
-    end
-
     def request(url, token: auth_token, payload: nil)
       uri = URI(url)
       headers = {
