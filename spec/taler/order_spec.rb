@@ -10,10 +10,10 @@ RSpec.describe Taler::Order do
     order.create(
       amount: "KUDOS:4",
       summary: "Order total",
-      fulfillment_url: "http://example.com"
+      fulfillment_message: "Thank you for testing the payment."
     )
     expect(order.to_s)
-      .to eq "#<Taler::Order https://backend.demo.taler.net/instances/sandbox/orders/2026.029-02M2JNJ2TGA2P {}>"
+      .to match %r[#<Taler::Order https://backend.demo.taler.net/instances/sandbox/orders/[0-9A-Z.-]+ {}>]
 
     prompt "Pay at: #{order.status_url}"
 

@@ -16,7 +16,7 @@ module Taler
     def request_token
       url = "#{@backend_url}/private/token"
       payload = {scope: "write"}
-      result = request(url, payload:)
+      result = request(url, token: auth_token, payload:)
       result.fetch("token")
     end
 
@@ -53,7 +53,11 @@ module Taler
       "secret-token:#{@password}"
     end
 
-    def request(url, token: auth_token, payload: nil)
+    def access_token
+      @access_token ||= request_token
+    end
+
+    def request(url, token: access_token, payload: nil)
       uri = URI(url)
       headers = {
         "Authorization" => "Bearer #{token}",
