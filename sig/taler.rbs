@@ -1,4 +1,137 @@
 module Taler
-  VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  VERSION: untyped
+
+  class Error < StandardError
+  end
+
+  # Order representation with convenient access to the merchant API.
+  class Order
+    # Connect an Order to the Taler merchant backend.
+    # 
+    # _@param_ `backend_url` — e.g. `"https://backend.demo.taler.net/instances/sandbox"`
+    # 
+    # _@param_ `password` — e.g. `"sandbox"`
+    # 
+    # _@param_ `id` — The order id of an existing order.
+    # 
+    # Connect to the official demo backend
+    # ```ruby
+    # Taler::Order.new(
+    #   backend_url: "https://backend.demo.taler.net/instances/sandbox",
+    #   password: "sandbox"
+    # )
+    # ```
+    def initialize: (backend_url: String, password: String, ?id: String?) -> void
+
+    # sord omit - no YARD type given for "amount:", using untyped
+    # sord omit - no YARD type given for "summary:", using untyped
+    # sord omit - no YARD type given for "fulfillment_url:", using untyped
+    # sord omit - no YARD type given for "fulfillment_message:", using untyped
+    # Create a new order record ready to take a payment.
+    # 
+    # _@return_ — The id of the new order.
+    def create: (
+                  amount: untyped,
+                  summary: untyped,
+                  ?fulfillment_url: untyped,
+                  ?fulfillment_message: untyped
+                ) -> String
+
+    # sord omit - no YARD return type given, using untyped
+    # The page where the customer can pay or accept a refund,
+    # depending on the state of the order.
+    # 
+    # The merchant backend opens the Taler plugin or app if it can.
+    # Otherwise it shows a QR code to scan in the app and provides
+    # installation instructions.
+    def status_url: () -> untyped
+
+    # Access order status fields.
+    # 
+    # It queries the backend if it hasn't done that already.
+    # Call {#reload} beforehand to get the latest status from the backend.
+    # 
+    # _@param_ `key` — A field in the order status response of the backend, e.g. `order_status`.
+    # 
+    # _@return_ — The value of the field.
+    # Any simple type supported by JSON.
+    # 
+    # ```ruby
+    # fetch("order_status") #=> "unpaid"
+    # ```
+    def fetch: (String key) -> (String | bool)
+
+    # sord omit - no YARD return type given, using untyped
+    # Query the latest order information from the backend.
+    # 
+    # If you called {#fetch} in the past and are expecting updates from
+    # user interaction, you want to call this.
+    def reload: () -> untyped
+
+    # Issue a refund request for this order.
+    # 
+    # _@param_ `refund` — The amount with currency.
+    # 
+    # _@param_ `reason` — Why are you refunding?
+    # 
+    # _@return_ — Response from the merchant backend.
+    def refund: (refund: String, reason: String) -> ::Hash[untyped, untyped]
+
+    # sord omit - no YARD return type given, using untyped
+    def inspect: () -> untyped
+
+    # sord omit - no YARD return type given, using untyped
+    def to_s: () -> untyped
+  end
+
+  # Access the GNU Taler merchant backend API.
+  # 
+  # See: https://docs.taler.net/core/api-merchant.html
+  class Client
+    # sord omit - no YARD type given for "backend_url", using untyped
+    # sord omit - no YARD type given for "password", using untyped
+    def initialize: (untyped backend_url, untyped password) -> void
+
+    # sord omit - no YARD return type given, using untyped
+    # Obtain an access token to authenticate all other API calls.
+    def request_token: () -> untyped
+
+    # sord omit - no YARD type given for "amount:", using untyped
+    # sord omit - no YARD type given for "summary:", using untyped
+    # sord omit - no YARD type given for "fulfillment_url:", using untyped
+    # sord omit - no YARD type given for "fulfillment_message:", using untyped
+    # sord omit - no YARD return type given, using untyped
+    def create_order: (
+                        amount: untyped,
+                        summary: untyped,
+                        ?fulfillment_url: untyped,
+                        ?fulfillment_message: untyped
+                      ) -> untyped
+
+    # sord omit - no YARD type given for "order_id", using untyped
+    # sord omit - no YARD return type given, using untyped
+    def order_status_url: (untyped order_id) -> untyped
+
+    # sord omit - no YARD type given for "order_id", using untyped
+    # sord omit - no YARD return type given, using untyped
+    def fetch_order: (untyped order_id) -> untyped
+
+    # sord omit - no YARD type given for "order_id", using untyped
+    # sord omit - no YARD type given for "refund:", using untyped
+    # sord omit - no YARD type given for "reason:", using untyped
+    # sord omit - no YARD return type given, using untyped
+    def refund_order: (untyped order_id, refund: untyped, reason: untyped) -> untyped
+
+    # sord omit - no YARD return type given, using untyped
+    def auth_token: () -> untyped
+
+    # sord omit - no YARD return type given, using untyped
+    def access_token: () -> untyped
+
+    # sord omit - no YARD type given for "url", using untyped
+    # sord omit - no YARD type given for "token:", using untyped
+    # sord omit - no YARD type given for "payload:", using untyped
+    # sord omit - no YARD return type given, using untyped
+    def request: (untyped url, ?token: untyped, ?payload: untyped) -> untyped
+  end
 end
