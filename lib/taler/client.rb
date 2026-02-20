@@ -13,6 +13,7 @@ module Taler
       @password = password
     end
 
+    # Obtain an access token to authenticate all other API calls.
     def request_token
       url = "#{@backend_url}/private/token"
       payload = {scope: "write"}
