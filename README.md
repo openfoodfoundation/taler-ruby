@@ -53,6 +53,7 @@ You can also run `bin/console` for an interactive prompt.
 
 - Update the version number in `lib/taler/version.rb`.
 - Update the `CHANGELOG.md` file.
+- Run `bundle update`.
 - Commit.
 - Run `bundle exec rake release` to build, tag and push the gem.
 

@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.3.0] - 2026-02-24
+
+- Update docs and rbs file.
+- Custom methods `Taler::Order#to_s` and `#inspect`.
+- Replaced deprecated password auth with access token.
+
 ## [0.2.0] - 2026-02-02
 
 - Add `Taler::Order` as an easier interface.
