@@ -20,6 +20,12 @@ module Taler
 
     # Create a new order record ready to take a payment.
     #
+    # @param amount [String] e.g. "KUDOS:200"
+    # @param summary [String] A description of the order displayed to the user.
+    # @param fulfillment_url [String] The user is redirected to this URL after
+    #   payment. The order status page also links here.
+    # @param fulfillment_message [String] Text to display to the user after
+    #   payment.
     # @return [String] The id of the new order.
     def create(amount:, summary:, fulfillment_url: nil, fulfillment_message: nil)
       response = @client.create_order(
@@ -34,6 +40,8 @@ module Taler
     # The merchant backend opens the Taler plugin or app if it can.
     # Otherwise it shows a QR code to scan in the app and provides
     # installation instructions.
+    #
+    # @return [String]
     def status_url
       @client.order_status_url(@id)
     end
@@ -58,6 +66,8 @@ module Taler
     #
     # If you called {#fetch} in the past and are expecting updates from
     # user interaction, you want to call this.
+    #
+    # @return [Hash] The order status returned by the backend.
     def reload
       @status = @client.fetch_order(@id)
     end
@@ -72,6 +82,7 @@ module Taler
       @client.refund_order(@id, refund:, reason:)
     end
 
+    # @return [String]
     def inspect
       status = @status.to_h.slice(*%w[
         order_status
@@ -84,6 +95,7 @@ module Taler
       "#<#{self.class.name} #{status_url} #{status.inspect}>"
     end
 
+    # @return [String]
     def to_s
       status = @status.to_h.slice("order_status", "refunded")
       "#<#{self.class.name} #{status_url} #{status.inspect}>"
