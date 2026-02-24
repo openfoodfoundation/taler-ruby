@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   # Documentation:
   spec.add_development_dependency "yard"
   spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "sord"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
