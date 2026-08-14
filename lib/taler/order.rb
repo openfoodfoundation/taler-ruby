@@ -6,15 +6,18 @@ module Taler
     # Connect an Order to the Taler merchant backend.
     #
     # @param backend_url [String] e.g. `"https://backend.demo.taler.net/instances/sandbox"`
-    # @param password [String] e.g. `"sandbox"`
+    # @param password [String, nil] e.g. `"sandbox"`
+    # @param access_token [String, nil] An alternative to the password, see
+    #   {Client#request_token}. It has to include the `"secret-token:"` prefix.
     # @param id [String] The order id of an existing order.
+    # @raise [ArgumentError] If neither password nor access token are given.
     # @example Connect to the official demo backend
     #   Taler::Order.new(
     #     backend_url: "https://backend.demo.taler.net/instances/sandbox",
     #     password: "sandbox"
     #   )
-    def initialize(backend_url:, password:, id: nil)
-      @client = Client.new(backend_url, password)
+    def initialize(backend_url:, password: nil, access_token: nil, id: nil)
+      @client = Client.new(backend_url, password, access_token:)
       @id = id
     end
 

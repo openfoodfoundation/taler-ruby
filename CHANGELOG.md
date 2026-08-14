@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+- Authenticate with the instance password again instead of requesting an
+  access token first. Backends with two-factor authentication challenge the
+  token endpoint and the gem couldn't complete the login. The order endpoints
+  are never challenged and the password works on all of them.
+- Add an `access_token` option to `Taler::Client` and `Taler::Order` for
+  callers who don't want to share the instance password.
+- Check the response status of all requests and raise `Taler::RequestError`
+  instead of failing to parse an unexpected body.
+- Raise `Taler::ChallengeRequired` when the backend asks for two-factor
+  authentication.
+- `Taler::Client#request_token` takes a `scope` and a `duration` and reads the
+  `access_token` field, falling back to the deprecated `token` field.
+
 ## [0.3.0] - 2026-02-24
 
 - Update docs and rbs file.

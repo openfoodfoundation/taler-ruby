@@ -35,4 +35,19 @@ RSpec.describe Taler::Order do
     expect(order.inspect).to match(/"refunded" ?=> ?true/)
     expect(order.inspect).to match(/"refund_amount" ?=> ?"KUDOS:4"/)
   end
+
+  it "can authenticate with an access token instead of a password" do
+    order = Taler::Order.new(backend_url:, access_token: "secret-token:abc")
+    request = stub_request(:post, "#{backend_url}/private/orders")
+      .with(headers: {"Authorization" => "Bearer secret-token:abc"})
+      .to_return(body: {order_id: "one"}.to_json)
+
+    expect(order.create(amount: "KUDOS:4", summary: "Order total")).to eq "one"
+    expect(request).to have_been_requested
+  end
+
+  it "requires a password or an access token" do
+    expect { Taler::Order.new(backend_url:) }
+      .to raise_error(ArgumentError, /password or an access_token/)
+  end
 end

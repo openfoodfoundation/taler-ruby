@@ -6,6 +6,62 @@ module Taler
   class Error < StandardError
   end
 
+  # Raised when the merchant backend answers with an unexpected status code.
+  class RequestError < Taler::Error
+    # _@param_ `message`
+    # 
+    # _@param_ `status`
+    # 
+    # _@param_ `body`
+    def initialize: (String message, status: Integer, body: String) -> void
+
+    # _@return_ — The HTTP status code of the response.
+    attr_reader status: Integer
+
+    # _@return_ — The raw response body.
+    attr_reader body: String
+  end
+
+  # Raised when the backend wants multi-factor authentication before it
+  # performs the requested operation.
+  # 
+  # The backend answers with `202 Accepted` and a list of challenges. Each
+  # challenge has to be requested and then solved with a TAN sent to the
+  # instance owner. Solving challenges is not supported by this gem yet.
+  # 
+  # Only account management endpoints require MFA. Most notably, requesting
+  # an access token may be challenged while the order endpoints never are.
+  # So you can avoid this error by authenticating with the instance password
+  # instead of an access token, which is the default.
+  # 
+  # See: https://docs.taler.net/core/api-merchant.html#two-factor-auth
+  class ChallengeRequired < Taler::RequestError
+    # _@param_ `message`
+    # 
+    # _@param_ `status`
+    # 
+    # _@param_ `body`
+    # 
+    # _@param_ `challenges`
+    # 
+    # _@param_ `combi_and`
+    def initialize: (
+                      String message,
+                      status: Integer,
+                      body: String,
+                      ?challenges: ::Array[::Hash[untyped, untyped]],
+                      ?combi_and: bool
+                    ) -> void
+
+    # _@return_ — The challenges to solve. Each one has a
+    # `challenge_id`, a `tan_channel` and a `tan_info` hint.
+    attr_reader challenges: ::Array[::Hash[untyped, untyped]]
+
+    # _@return_ — True if *all* challenges have to be solved, false if
+    # it is sufficient to solve one of them.
+    attr_reader combi_and: bool
+  end
+
   # Order representation with convenient access to the merchant API.
   class Order
     # Connect an Order to the Taler merchant backend.
@@ -13,6 +69,8 @@ module Taler
     # _@param_ `backend_url` — e.g. `"https://backend.demo.taler.net/instances/sandbox"`
     # 
     # _@param_ `password` — e.g. `"sandbox"`
+    # 
+    # _@param_ `access_token` — An alternative to the password, see {Client#request_token}. It has to include the `"secret-token:"` prefix.
     # 
     # _@param_ `id` — The order id of an existing order.
     # 
@@ -23,7 +81,12 @@ module Taler
     #   password: "sandbox"
     # )
     # ```
-    def initialize: (backend_url: String, password: String, ?id: String?) -> void
+    def initialize: (
+                      backend_url: String,
+                      ?password: String?,
+                      ?access_token: String?,
+                      ?id: String?
+                    ) -> void
 
     # Create a new order record ready to take a payment.
     # 
@@ -94,11 +157,28 @@ module Taler
   class Client
     # _@param_ `backend_url` — e.g. `"https://backend.demo.taler.net/instances/sandbox"`
     # 
-    # _@param_ `password`
-    def initialize: (String backend_url, String password) -> void
+    # _@param_ `password` — The instance password. It is used as authentication token for all requests unless an `access_token` is given.
+    # 
+    # _@param_ `access_token` — A token obtained from the `/private/token` endpoint, see {#request_token}. It has to include the `"secret-token:"` prefix. Given a token, the password isn't needed.
+    def initialize: (String backend_url, ?String? password, ?access_token: String?) -> void
 
-    # Obtain an access token to authenticate all other API calls.
-    def request_token: () -> String
+    # Obtain an access token to authenticate other API calls.
+    # 
+    # This is optional. All requests authenticate with the instance password
+    # by default. But an access token can be scoped and passed on to a less
+    # trusted party without sharing the instance password.
+    # 
+    # Beware that the backend may require multi-factor authentication for
+    # this endpoint. It then answers with a list of challenges to solve and
+    # this method raises {ChallengeRequired}. The order endpoints are never
+    # challenged, so password authentication keeps working in that case.
+    # 
+    # _@param_ `scope` — Which kinds of operations the token allows, e.g. `"order-mgmt"` to create, read and refund orders. Tokens of the default `"all"` scope are always refreshable.
+    # 
+    # _@param_ `duration` — How long the token stays valid, e.g. `{d_us: 86_400_000_000}` for one day. The backend applies its own upper bound and its own default when this is omitted.
+    # 
+    # _@return_ — The token including the `"secret-token:"` prefix.
+    def request_token: (?scope: String, ?duration: ::Hash[untyped, untyped]?) -> String
 
     # _@param_ `amount` — e.g. "KUDOS:200"
     # 
@@ -134,15 +214,47 @@ module Taler
     # _@return_ — Response from the merchant backend.
     def refund_order: (String order_id, refund: String, reason: String) -> ::Hash[untyped, untyped]
 
-    def auth_token: () -> String
+    # The instance password in the format of an authentication token.
+    # 
+    # This is deprecated since merchant API v19 but still the simplest way to
+    # authenticate. It works on all endpoints and is never challenged for
+    # multi-factor authentication.
+    def password_token: () -> String
 
-    def access_token: () -> String
+    def auth_token: () -> String
 
     # _@param_ `url`
     # 
     # _@param_ `token`
     # 
+    # _@param_ `payload` — Sent as JSON body of a POST request. Without a payload, a GET request is sent.
+    # 
+    # _@return_ — The parsed response body.
+    def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> ::Hash[untyped, untyped]
+
+    # sord warn - URI wasn't able to be resolved to a constant in this project
+    # sord warn - Net::HTTPRequest wasn't able to be resolved to a constant in this project
+    # _@param_ `uri`
+    # 
+    # _@param_ `token`
+    # 
     # _@param_ `payload`
-    def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> String
+    def build_request: (URI uri, String token, ::Hash[untyped, untyped]? payload) -> Net::HTTPRequest
+
+    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
+    # _@param_ `response`
+    # 
+    # _@return_ — The parsed response body.
+    def parse: (Net::HTTPResponse response) -> ::Hash[untyped, untyped]
+
+    # _@param_ `status`
+    # 
+    # _@param_ `body`
+    def challenge_error: (Integer status, String body) -> ChallengeRequired
+
+    # Error bodies can be long, especially when a proxy returns HTML.
+    # 
+    # _@param_ `body`
+    def summarise: (String body) -> String
   end
 end
