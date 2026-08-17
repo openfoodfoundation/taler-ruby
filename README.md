@@ -16,7 +16,7 @@ bundle add taler
 require "taler"
 
 backend_url = "https://backend.demo.taler.net/instances/sandbox"
-backend_password = "sandbox"
+password = "sandbox"
 
 order = Taler::Order.new(backend_url:, password:)
 order.create(
