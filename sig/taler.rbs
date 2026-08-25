@@ -136,8 +136,6 @@ module Taler
 
     def auth_token: () -> String
 
-    def access_token: () -> String
-
     # _@param_ `url`
     # 
     # _@param_ `token`

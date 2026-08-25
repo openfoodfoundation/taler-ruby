@@ -11,10 +11,10 @@ http_interactions:
       - Bearer secret-token:sandbox
       Accept:
       - application/json
-      Content-Type:
-      - application/json
       User-Agent:
       - Taler Ruby
+      Content-Type:
+      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Tue, 13 Jan 2026 04:09:09 GMT
+      - Mon, 17 Aug 2026 05:29:36 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -46,13 +46,13 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "access_token": "secret-token:ETYEBEW21JJ0CBTPWBNR6B2TRSSVA05TQGXH5ZAAQ9D9JMRHGG50",
-          "token": "secret-token:ETYEBEW21JJ0CBTPWBNR6B2TRSSVA05TQGXH5ZAAQ9D9JMRHGG50",
+          "access_token": "secret-token:PY9GM4B9NRNX3CAXWQ3MRN4Y4M80PADXZ2RT6EXA8F1HGZ6RJ5P0",
+          "token": "secret-token:PY9GM4B9NRNX3CAXWQ3MRN4Y4M80PADXZ2RT6EXA8F1HGZ6RJ5P0",
           "scope": "write",
           "refreshable": false,
           "expiration": {
-            "t_s": 1768363749
+            "t_s": 1787030976
           }
         }
-  recorded_at: Tue, 13 Jan 2026 04:09:09 GMT
+  recorded_at: Mon, 17 Aug 2026 05:29:37 GMT
 recorded_with: VCR 6.4.0

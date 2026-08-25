@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+- Restore deprecated password auth as access tokens need 2FA in production.
+  Instead of obtaining a token on-the-fly, the user would provide a token
+  to the app (and this gem) instead of the password. We can add support for
+  that another time.
+
 ## [0.3.0] - 2026-02-24
 
 - Update docs and rbs file.

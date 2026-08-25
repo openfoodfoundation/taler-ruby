@@ -76,16 +76,11 @@ module Taler
       "secret-token:#{@password}"
     end
 
-    # @return [String]
-    def access_token
-      @access_token ||= request_token
-    end
-
     # @param url [String]
     # @param token [String]
     # @param payload [Hash]
     # @return [String]
-    def request(url, token: access_token, payload: nil)
+    def request(url, token: auth_token, payload: nil)
       uri = URI(url)
       headers = {
         "Authorization" => "Bearer #{token}",

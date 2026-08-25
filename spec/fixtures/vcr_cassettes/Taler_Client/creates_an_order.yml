@@ -60,16 +60,17 @@ http_interactions:
     uri: https://backend.demo.taler.net/instances/sandbox/private/orders
     body:
       encoding: UTF-8
-      string: '{"order":{"amount":"KUDOS:5.95","summary":"Order total","fulfillment_url":"http://example.com"},"create_token":false}'
+      string: '{"order":{"amount":"KUDOS:5.95","summary":"Order total","fulfillment_message":"Thank
+        you for testing."},"create_token":false}'
     headers:
       Authorization:
-      - Bearer secret-token:JBJ05DSW79WJPFSMQMSD5519JHV0Y69NXC89VA6SMD58W6GVJGCG
+      - Bearer secret-token:sandbox
       Accept:
-      - application/json
-      Content-Type:
       - application/json
       User-Agent:
       - Taler Ruby
+      Content-Type:
+      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
@@ -80,11 +81,11 @@ http_interactions:
       Server:
       - nginx/1.26.3
       Date:
-      - Tue, 13 Jan 2026 04:09:11 GMT
+      - Mon, 17 Aug 2026 05:29:38 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '42'
+      - '89'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -98,10 +99,13 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |-
         {
-          "order_id": "2026.013-0343KZ3QWGEFW"
+          "order_id": "2026.229-MHMYQSG000000",
+          "pay_deadline": {
+            "t_s": 1786944758
+          }
         }
-  recorded_at: Tue, 13 Jan 2026 04:09:12 GMT
+  recorded_at: Mon, 17 Aug 2026 05:29:38 GMT
 recorded_with: VCR 6.4.0
