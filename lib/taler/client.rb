@@ -93,12 +93,7 @@ module Taler
         "User-Agent" => "Taler Ruby"
       }
 
-      response = if payload.nil?
-        Net::HTTP.get_response(uri, headers)
-      else
-        headers["Content-Type"] = "application/json"
-        Net::HTTP.post(uri, JSON.dump(payload), headers)
-      end
+      response = http_request(uri, headers, payload)
 
       # The merchant API answers 200 to every request this gem makes.
       # Anything else explains a failure, including 202 which asks for
@@ -107,6 +102,19 @@ module Taler
       raise RequestError.new(response) unless response.is_a?(Net::HTTPOK)
 
       JSON.parse(response.body)
+    end
+
+    # @param uri [URI]
+    # @param headers [Hash]
+    # @param payload [Hash]
+    # @return [Net::HTTPResponse]
+    def http_request(uri, headers, payload)
+      if payload.nil?
+        Net::HTTP.get_response(uri, headers)
+      else
+        headers["Content-Type"] = "application/json"
+        Net::HTTP.post(uri, JSON.dump(payload), headers)
+      end
     end
   end
 end

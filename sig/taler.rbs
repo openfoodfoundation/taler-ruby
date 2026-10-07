@@ -169,5 +169,14 @@ module Taler
     # 
     # _@return_ — The parsed JSON response.
     def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> ::Hash[untyped, untyped]
+
+    # sord warn - URI wasn't able to be resolved to a constant in this project
+    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
+    # _@param_ `uri`
+    # 
+    # _@param_ `headers`
+    # 
+    # _@param_ `payload`
+    def http_request: (URI uri, ::Hash[untyped, untyped] headers, ::Hash[untyped, untyped] payload) -> Net::HTTPResponse
   end
 end
