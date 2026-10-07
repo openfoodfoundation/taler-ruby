@@ -104,9 +104,9 @@ module Taler
       # Anything else explains a failure, including 202 which asks for
       # two-factor authentication on the token endpoint.
       # See: https://docs.taler.net/core/api-merchant.html
-      return JSON.parse(response.body) if response.is_a?(Net::HTTPOK)
+      raise RequestError.new(response) unless response.is_a?(Net::HTTPOK)
 
-      raise RequestError.new(response)
+      JSON.parse(response.body)
     end
   end
 end
