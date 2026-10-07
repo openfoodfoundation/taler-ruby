@@ -115,6 +115,8 @@ module Taler
         headers["Content-Type"] = "application/json"
         Net::HTTP.post(uri, JSON.dump(payload), headers)
       end
+    rescue => e
+      raise Error, e.message
     end
   end
 end

@@ -47,6 +47,13 @@ RSpec.describe Taler::Client do
   describe "error responses" do
     let(:orders_url) { "#{backend_url}/private/orders" }
 
+    it "raises on any error with a Taler::Error" do
+      stub_request(:post, orders_url).to_raise(EOFError)
+
+      expect { client.create_order(amount: "KUDOS:1", summary: "Test") }
+        .to raise_error(Taler::Error)
+    end
+
     it "raises with the explanation of the backend when a request is rejected" do
       stub_request(:post, orders_url).to_return(
         status: 401,
