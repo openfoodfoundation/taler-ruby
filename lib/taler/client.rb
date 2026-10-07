@@ -106,15 +106,7 @@ module Taler
       # See: https://docs.taler.net/core/api-merchant.html
       return JSON.parse(response.body) if response.is_a?(Net::HTTPOK)
 
-      raise RequestError.new(status: response.code.to_i, body: error_body(response.body))
-    end
-
-    # @param body [String]
-    # @return [Hash, String] The parsed JSON body, or the raw body if it isn't JSON.
-    def error_body(body)
-      JSON.parse(body)
-    rescue JSON::ParserError
-      body
+      raise RequestError.new(response)
     end
   end
 end

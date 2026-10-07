@@ -22,11 +22,10 @@ module Taler
     # @return [Hash, String] The parsed JSON body or the raw body.
     attr_reader :body
 
-    # @param status [Integer]
-    # @param body [Hash, String]
-    def initialize(status:, body:)
-      @status = status
-      @body = body
+    # @param response [Net::HTTPResponse]
+    def initialize(response)
+      @status = response.code.to_i
+      @body = error_body(response.body)
       super("The Taler backend responded with #{status}: #{summary}")
     end
 
@@ -37,6 +36,14 @@ module Taler
       return body.fetch("hint") if body.is_a?(Hash) && body.key?("hint")
 
       body.to_s.strip
+    end
+
+    # @param body [String]
+    # @return [Hash, String] The parsed JSON body, or the raw body if it isn't JSON.
+    def error_body(body)
+      JSON.parse(body)
+    rescue JSON::ParserError
+      body
     end
   end
 end

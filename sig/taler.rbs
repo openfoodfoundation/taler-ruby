@@ -13,12 +13,16 @@ module Taler
   # as the error message. A body that is not JSON, like an HTML page
   # from a proxy, is kept as text.
   class RequestError < Taler::Error
-    # _@param_ `status`
-    # 
-    # _@param_ `body`
-    def initialize: (status: Integer, body: (::Hash[untyped, untyped] | String)) -> void
+    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
+    # _@param_ `response`
+    def initialize: (Net::HTTPResponse response) -> void
 
     def summary: () -> String
+
+    # _@param_ `body`
+    # 
+    # _@return_ — The parsed JSON body, or the raw body if it isn't JSON.
+    def error_body: (String body) -> (::Hash[untyped, untyped] | String)
 
     # _@return_ — The HTTP status code of the response.
     attr_reader status: Integer
@@ -165,10 +169,5 @@ module Taler
     # 
     # _@return_ — The parsed JSON response.
     def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> ::Hash[untyped, untyped]
-
-    # _@param_ `body`
-    # 
-    # _@return_ — The parsed JSON body, or the raw body if it isn't JSON.
-    def error_body: (String body) -> (::Hash[untyped, untyped] | String)
   end
 end
