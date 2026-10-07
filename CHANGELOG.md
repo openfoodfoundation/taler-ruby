@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+- Raise `Taler::RequestError` when the backend responds with anything but
+  200 OK. The error carries the HTTP `status` and the response `body`, and
+  its message includes the backend's hint. Before, an error response was
+  parsed as a success and callers got a confusing `KeyError` or
+  `JSON::ParserError` instead.
+
 ## [0.4.0] - 2026-08-25
 
 - Restore deprecated password auth as access tokens need 2FA in production.

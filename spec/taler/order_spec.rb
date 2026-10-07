@@ -35,4 +35,12 @@ RSpec.describe Taler::Order do
     expect(order.inspect).to match(/"refunded" ?=> ?true/)
     expect(order.inspect).to match(/"refund_amount" ?=> ?"KUDOS:4"/)
   end
+
+  it "raises when the backend rejects the order" do
+    stub_request(:post, "#{backend_url}/private/orders")
+      .to_return(status: 401, body: {code: 2015, hint: "Unauthorized"}.to_json)
+
+    expect { order.create(amount: "KUDOS:4", summary: "Order total") }
+      .to raise_error(Taler::RequestError, "The Taler backend responded with 401: Unauthorized")
+  end
 end

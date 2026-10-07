@@ -39,6 +39,22 @@ else
 end
 ```
 
+### Errors
+
+Every request raises `Taler::RequestError` when the backend responds with
+anything but 200 OK. The message includes the backend's explanation, and
+the error carries the HTTP status and the response body:
+
+```rb
+begin
+  order.create(amount: "KUDOS:4", summary: "Order total")
+rescue Taler::RequestError => e
+  puts e.message # The Taler backend responded with 401: The merchant refused the request due to lack of authorization.
+  puts e.status  # 401
+  puts e.body    # {"code" => 2015, "hint" => "...", "detail" => "..."}
+end
+```
+
 Read more in the official documentation:
 
 - https://rubydoc.info/gems/taler

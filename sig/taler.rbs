@@ -6,6 +6,31 @@ module Taler
   class Error < StandardError
   end
 
+  # Raised when the merchant backend answers with anything but 200 OK.
+  # 
+  # The backend explains errors with a JSON body like
+  # `{"code": 2015, "hint": "...", "detail": "..."}`. The hint is used
+  # as the error message. A body that is not JSON, like an HTML page
+  # from a proxy, is kept as text.
+  class RequestError < Taler::Error
+    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
+    # _@param_ `response`
+    def initialize: (Net::HTTPResponse response) -> void
+
+    def summary: () -> String
+
+    # _@param_ `body`
+    # 
+    # _@return_ — The parsed JSON body, or the raw body if it isn't JSON.
+    def error_body: (String body) -> (::Hash[untyped, untyped] | String)
+
+    # _@return_ — The HTTP status code of the response.
+    attr_reader status: Integer
+
+    # _@return_ — The parsed JSON body or the raw body.
+    attr_reader body: (::Hash[untyped, untyped] | String)
+  end
+
   # Order representation with convenient access to the merchant API.
   class Order
     # Connect an Order to the Taler merchant backend.
@@ -141,6 +166,17 @@ module Taler
     # _@param_ `token`
     # 
     # _@param_ `payload`
-    def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> String
+    # 
+    # _@return_ — The parsed JSON response.
+    def request: (String url, ?token: String, ?payload: ::Hash[untyped, untyped]?) -> ::Hash[untyped, untyped]
+
+    # sord warn - URI wasn't able to be resolved to a constant in this project
+    # sord warn - Net::HTTPResponse wasn't able to be resolved to a constant in this project
+    # _@param_ `uri`
+    # 
+    # _@param_ `headers`
+    # 
+    # _@param_ `payload`
+    def http_request: (URI uri, ::Hash[untyped, untyped] headers, ::Hash[untyped, untyped] payload) -> Net::HTTPResponse
   end
 end

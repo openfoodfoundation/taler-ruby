@@ -27,6 +27,7 @@ module Taler
     # @param fulfillment_message [String] Text to display to the user after
     #   payment.
     # @return [String] The id of the new order.
+    # @raise [RequestError] If the backend rejects the request.
     def create(amount:, summary:, fulfillment_url: nil, fulfillment_message: nil)
       response = @client.create_order(
         amount:, summary:, fulfillment_url:, fulfillment_message:
@@ -57,6 +58,7 @@ module Taler
     #   Any simple type supported by JSON.
     # @example
     #   fetch("order_status") #=> "unpaid"
+    # @raise [RequestError] If the backend rejects the request.
     def fetch(key)
       reload unless @status
       @status.fetch(key)
@@ -68,6 +70,7 @@ module Taler
     # user interaction, you want to call this.
     #
     # @return [Hash] The order status returned by the backend.
+    # @raise [RequestError] If the backend rejects the request.
     def reload
       @status = @client.fetch_order(@id)
     end
@@ -78,6 +81,7 @@ module Taler
     # @param reason [String] Why are you refunding?
     #
     # @return [Hash] Response from the merchant backend.
+    # @raise [RequestError] If the backend rejects the request.
     def refund(refund:, reason:)
       @client.refund_order(@id, refund:, reason:)
     end

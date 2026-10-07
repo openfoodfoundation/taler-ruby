@@ -43,4 +43,65 @@ RSpec.describe Taler::Client do
     expect(order).to include("order_status" => "paid")
     expect(order).to include("refunded" => true)
   end
+
+  describe "error responses" do
+    let(:orders_url) { "#{backend_url}/private/orders" }
+
+    it "raises on any error with a Taler::Error" do
+      stub_request(:post, orders_url).to_raise(EOFError)
+
+      expect { client.create_order(amount: "KUDOS:1", summary: "Test") }
+        .to raise_error(Taler::Error)
+    end
+
+    it "raises with the explanation of the backend when a request is rejected" do
+      stub_request(:post, orders_url).to_return(
+        status: 401,
+        body: {code: 2015, hint: "The merchant refused the request due to lack of authorization."}.to_json
+      )
+
+      expect { client.create_order(amount: "KUDOS:1", summary: "Test") }.to raise_error(
+        an_instance_of(Taler::RequestError).and(having_attributes(
+          status: 401,
+          body: include("code" => 2015),
+          message: "The Taler backend responded with 401: " \
+            "The merchant refused the request due to lack of authorization."
+        ))
+      )
+    end
+
+    it "raises when fetching an unknown order" do
+      stub_request(:get, "#{orders_url}/unknown")
+        .to_return(status: 404, body: {code: 2000, hint: "Order unknown"}.to_json)
+
+      expect { client.fetch_order("unknown") }
+        .to raise_error(Taler::RequestError, "The Taler backend responded with 404: Order unknown")
+    end
+
+    it "keeps a body that is not JSON as text" do
+      stub_request(:post, orders_url).to_return(status: 502, body: "<html>Bad Gateway</html>")
+
+      expect { client.create_order(amount: "KUDOS:1", summary: "Test") }.to raise_error(
+        an_instance_of(Taler::RequestError).and(having_attributes(
+          status: 502,
+          body: "<html>Bad Gateway</html>",
+          message: "The Taler backend responded with 502: <html>Bad Gateway</html>"
+        ))
+      )
+    end
+
+    it "treats a two-factor authentication challenge as an error" do
+      stub_request(:post, "#{backend_url}/private/token").to_return(
+        status: 202,
+        body: {challenges: [{tan_channel: "email", challenge_id: "1"}], combi_and: false}.to_json
+      )
+
+      expect { client.request_token }.to raise_error(
+        an_instance_of(Taler::RequestError).and(having_attributes(
+          status: 202,
+          body: include("challenges")
+        ))
+      )
+    end
+  end
 end
