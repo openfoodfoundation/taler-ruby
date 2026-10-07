@@ -52,6 +52,9 @@ rescue Taler::RequestError => e
   puts e.message # The Taler backend responded with 401: The merchant refused the request due to lack of authorization.
   puts e.status  # 401
   puts e.body    # {"code" => 2015, "hint" => "...", "detail" => "..."}
+rescue Taler::Error => e
+  puts e.message # E.g. could not reach destination
+  puts e.cause   # A StandardError that was raised during the request, e.g. Errno::ETIMEDOUT
 end
 ```
 

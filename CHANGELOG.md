@@ -5,6 +5,9 @@
   its message includes the backend's hint. Before, an error response was
   parsed as a success and callers got a confusing `KeyError` or
   `JSON::ParserError` instead.
+- Raise `Taler::Error` on any other error during the HTTP request. This
+  could be a connection error, a network failure or something completely
+  unknown.
 
 ## [0.4.0] - 2026-08-25
 
