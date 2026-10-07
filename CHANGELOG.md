@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-07
+
 - Raise `Taler::RequestError` when the backend responds with anything but
   200 OK. The error carries the HTTP `status` and the response `body`, and
   its message includes the backend's hint. Before, an error response was
