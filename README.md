@@ -80,3 +80,9 @@ You can also run `bin/console` for an interactive prompt.
 
 Bug reports and pull requests are welcome on GitHub
 at https://github.com/openfoodfoundation/taler-ruby.
+
+## Funding
+
+This project has been funded through [NGI TALER Fund](https://nlnet.nl/taler), a fund established by [NLnet](https://nlnet.nl) with financial support from the European Commission's [Next Generation Internet](https://ngi.eu) program. Learn more at the [NLnet project page](https://nlnet.nl/project/TALER-Ruby-OFN).
+
+[<img src="https://nlnet.nl/logo/banner.png" alt="NLnet foundation logo" width="20%" />](https://nlnet.nl)
